@@ -7,7 +7,7 @@ import me.brucefreedy.game.angle
 
 object PathUtil {
 
-    /*
+    /*todo
     * 길 각도 구하기 만들기
     * 길 사이 간격의 시차 리스트 만들기
     *
@@ -42,13 +42,14 @@ object PathUtil {
     )
 
 
-    fun calcAngle(jsonObject: JsonObject): List<Angle> {
-        if (jsonObject.has(Const.pathData)) {
-            return jsonObject.get(Const.pathData).asString.split("").let { it.subList(1, it.size - 1) }
+    fun calcAngle(jsonObject: JsonObject) =
+        if (jsonObject.has(Const.pathData))
+        //pathData
+            jsonObject.get(Const.pathData).asString.split("").let { it.subList(1, it.size - 1) }
                 .map { PATH_MAP[it]!!.angle }.toList()
-        }
-        return jsonObject.get(Const.angleData).asJsonArray.map { it.asBigInteger.toInt().angle }
-    }
+        else
+        //angleData
+            jsonObject.get(Const.angleData).asJsonArray.map { it.asBigInteger.toInt().angle }
 
 
 }

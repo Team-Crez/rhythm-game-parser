@@ -9,8 +9,12 @@ import me.brucefreedy.util.StringUtil
 
 class Adofai : Game {
     override fun parse(file: String): Result {
+        //parse file to json object
         val jsonObject = StringUtil.parseJsonFile(file)
+
+        //parse tile angle from json object
         PathUtil.calcAngle(jsonObject).toString()
+
         return AdofaiResult(1f.level)
     }
 }
