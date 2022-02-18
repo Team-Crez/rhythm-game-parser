@@ -26,7 +26,6 @@ repositories {
 }
 
 dependencies {
-
     api ("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     api("com.googlecode.json-simple:json-simple:1.1.1")
     api("com.google.code.gson:gson:2.8.9")

@@ -1,9 +1,9 @@
 package me.brucefreedy.game
 
-class Level(int: Number) {
+class Level(number: Number) {
     private val int: Number
     init {
-        this.int = if (int.toInt() == int) int.toInt() else int
+        this.int = if (number.toInt() == number) number.toInt() else number
     }
 
     override fun toString(): String {
