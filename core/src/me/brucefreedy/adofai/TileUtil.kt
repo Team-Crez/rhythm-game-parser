@@ -60,35 +60,37 @@ object TileUtil {
             bpm = jsonObject.get(settings).asJsonObject.get(bpm).asInt,
             angleList = angleList,
             json = jsonObject,
+            dir = true
         )
 
-        val eventRegister =  mapOf(
+        val eventRegister = mapOf(
             "Twirl" to Twirl(),
             "SetSpeed" to SetSpeed(),
         )
         val list = ArrayList<Int>()
-        var lastFloor = 0
-        jsonObject.get(actions).asJsonArray.map { it.asJsonObject }
-            .forEach {
-                try {
-                    val floor = it.get(Const.floor).asInt
-                    val eventType = it.get(Const.eventType).asString
-                    parseUnit.floor = floor
-                    parseUnit.json = it.asJsonObject
-                    eventRegister[eventType]?.parse(parseUnit)
-                    if (lastFloor != floor) {
-                        lastFloor = floor
-                        val before = angleList[floor - 1].number
-                        val current = angleList[floor].number + if (parseUnit.dir) 180 else 0
-                        val delay = ((current - before) / 360.0) * (parseUnit.bpm / 60.0) * 1000.0
-                        list.add(delay.toInt())
-                    }
-                    println(floor)
-                } catch (_: Exception) {
-                    list.add(0)
-                }
+        println(angleList.map { it.number })
+        val toList = jsonObject.get(actions).asJsonArray.map { it.asJsonObject }.toList()
+        angleList.map { it.number }.forEachIndexed { index, floor ->
+            toList.filter{it.get(Const.floor).asInt == floor}.forEach {
+                val eventType = it.get(Const. eventType).asString
+                parseUnit.floor = floor
+                parseUnit.json = it.asJsonObject
+                eventRegister[eventType]?.parse(parseUnit)
             }
+            val before = if (index < 2) 0.0 else angleList[index - 2].number.toDouble()
+            val middle = if (index > 0) (angleList[index - 1].number.toDouble()) else 0.0
+            var degree = (middle - before)
+            println("$degree / $before / $middle")
+            degree = 180 - degree
+
+            val delay = toMillisecond(degree, parseUnit.bpm)
+            list.add(delay.toInt())
+        }
         return list
     }
+
+    fun toMillisecond(degree: Double, bpm: Int) = (degree / 180.0) * (bpm / 60.0) * 1000.0
+
+    fun getBpm(jsonObject: JsonObject) = jsonObject.get(settings).asJsonObject.get(bpm).asInt
 
 }

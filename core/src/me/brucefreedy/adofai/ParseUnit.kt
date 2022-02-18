@@ -8,5 +8,5 @@ data class ParseUnit(
     var floor: Int = 0,
     val angleList: List<Angle>,
     var json: JsonObject,
-    var dir: Boolean = false,
+    var dir: Boolean = true,
 )

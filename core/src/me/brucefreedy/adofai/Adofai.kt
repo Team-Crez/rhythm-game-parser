@@ -14,14 +14,14 @@ class Adofai : Game {
 
         //parse tile from json object
         val calcDelay = TileUtil.calcDelay(jsonObject)
-        for (d in calcDelay) {
-            Thread.sleep(d.toLong())
-            println("bomm!")
-        }
+        println(calcDelay)
 
-
-        return AdofaiResult(1f.level)
+        return AdofaiResult(1f.level, calcDelay, TileUtil.getBpm(jsonObject))
     }
 }
 
-class AdofaiResult(override val level: Level) : Result
+class AdofaiResult(
+    override val level: Level,
+    val calcDelay: List<Int>,
+    val startBpm: Int,
+) : Result
