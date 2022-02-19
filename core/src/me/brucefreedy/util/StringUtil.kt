@@ -12,6 +12,7 @@ object StringUtil {
         .replace(", ,", ", ")
         .replace(",\n}", "\n}")
         .replace(",\n]", "\n]")
+        .replace("],\n}", "]\n}")
 
     @JvmStatic
     @Throws(Exception::class)

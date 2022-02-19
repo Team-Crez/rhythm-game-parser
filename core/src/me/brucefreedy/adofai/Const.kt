@@ -9,6 +9,7 @@ object Const {
     const val settings = "settings"
     const val bpm = "bpm"
     const val actions = "actions"
+    const val countDownTicks = "countdownTicks"
 
     //actions
     const val floor = "floor"

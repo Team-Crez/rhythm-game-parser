@@ -32,7 +32,10 @@ object Main {
             println("ready for 3s...")
             Thread.sleep(3000L)
             robot.keyPress(80)
-            var count = 3000 + TileUtil.toMillisecond(315.0, adofaiResult.startBpm)
+            val startBpm = adofaiResult.startBpm
+            var count = 20 + TileUtil.toMillisecond(
+                (((startBpm%160)/160.0*360+180)%360+(adofaiResult.countDownTick+1)*180.0), startBpm
+            ).apply { println("ready: $this") }
             val startTime = System.currentTimeMillis()
             while (iterator.hasNext()) {
                 if (count <= System.currentTimeMillis() - startTime) {
