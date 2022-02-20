@@ -90,7 +90,7 @@ object TileUtil {
         return list
     }
 
-    fun toMillisecond(degree: Double, bpm: Double) = (degree) * (60.0 / bpm) * 1000.0
+    fun toMillisecond(degree: Double, bpm: Double) = (degree / 180.0) * (60.0 / bpm) * 1000.0
 
     fun getBpm(jsonObject: JsonObject) = jsonObject.get(settings).asJsonObject.get(bpm).asDouble
     fun getCountDownTick(jsonObject: JsonObject) = jsonObject.get(settings).asJsonObject.get(countDownTicks).asInt
