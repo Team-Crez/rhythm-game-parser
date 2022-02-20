@@ -3,7 +3,7 @@ package me.brucefreedy.adofai
 import com.google.gson.JsonObject
 import me.brucefreedy.adofai.Const.actions
 import me.brucefreedy.adofai.Const.bpm
-import me.brucefreedy.adofai.Const.countDownTicks
+import me.brucefreedy.adofai.Const.countdownTicks
 import me.brucefreedy.adofai.Const.settings
 
 object TileUtil {
@@ -89,7 +89,8 @@ object TileUtil {
 
     fun toMillisecond(degree: Double, bpm: Double) = (degree / 180.0) * (60.0 / bpm) * 1000.0
 
-    fun getBpm(jsonObject: JsonObject) = jsonObject.get(settings).asJsonObject.get(bpm).asDouble
-    fun getCountDownTick(jsonObject: JsonObject) = jsonObject.get(settings).asJsonObject.get(countDownTicks).asInt
+    fun getSettings(jsonObject: JsonObject) = jsonObject.get(settings).asJsonObject
+    fun getBpm(jsonObject: JsonObject) = getSettings(jsonObject).get(bpm).asDouble
+    fun getCountdownTicks(jsonObject: JsonObject) = getSettings(jsonObject).get(countdownTicks).asInt
 
 }

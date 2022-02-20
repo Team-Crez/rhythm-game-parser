@@ -16,7 +16,7 @@ class Adofai : Game {
         val calcDelay = TileUtil.calcDelay(jsonObject)
         println(calcDelay)
 
-        return AdofaiResult(1f.level, calcDelay, TileUtil.getBpm(jsonObject), TileUtil.getCountDownTick(jsonObject))
+        return AdofaiResult(1f.level, calcDelay, TileUtil.getBpm(jsonObject), TileUtil.getCountdownTicks(jsonObject))
     }
 }
 
