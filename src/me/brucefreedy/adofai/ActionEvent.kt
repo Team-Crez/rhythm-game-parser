@@ -1,7 +1,4 @@
-package me.brucefreedy.adofai.actionevent
-
-import me.brucefreedy.adofai.Const
-import me.brucefreedy.adofai.ParseUnit
+package me.brucefreedy.adofai
 
 interface ActionEvent {
     fun parse(parseUnit: ParseUnit)

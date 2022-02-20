@@ -5,8 +5,6 @@ import me.brucefreedy.adofai.Const.actions
 import me.brucefreedy.adofai.Const.bpm
 import me.brucefreedy.adofai.Const.countDownTicks
 import me.brucefreedy.adofai.Const.settings
-import me.brucefreedy.adofai.actionevent.SetSpeed
-import me.brucefreedy.adofai.actionevent.Twirl
 
 object TileUtil {
 
