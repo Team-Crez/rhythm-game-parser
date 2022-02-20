@@ -61,7 +61,7 @@ object TileUtil {
             bpm = jsonObject.get(settings).asJsonObject.get(bpm).asDouble,
             angleList = angleList,
             json = jsonObject,
-            dir = true
+            dir = false
         )
 
         val eventRegister = mapOf(

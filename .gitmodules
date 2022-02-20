@@ -1,0 +1,3 @@
+[submodule "macro"]
+	path = macro
+	url = https://github.com/Team-Crez/rhythm-game-macro
