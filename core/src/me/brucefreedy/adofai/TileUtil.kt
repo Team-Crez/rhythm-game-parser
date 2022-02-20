@@ -79,25 +79,18 @@ object TileUtil {
                 parseUnit.json = it.asJsonObject
                 eventRegister[eventType]?.parse(parseUnit)
             }
-            val before = angleList[index].number.toDouble()
-            val middle = if (index + 1 < angleList.size) (angleList[index + 1].number.toDouble()) else 0.0
-            var degree = (middle - before)
-            println("$degree / $before / $middle")
-            val b = 180 < degree
-            var d180 = 180
-            if (b) {
-                degree *= -1
-            }
-            degree = if (parseUnit.dir) d180 - degree else d180 + degree
-            if (b) degree -= 180
-            println("::${parseUnit.bpm}")
-            val delay = toMillisecond(degree, parseUnit.bpm)
+            val before = angleList[index].number
+            val after = if (index + 1 < angleList.size) angleList[index + 1].number else 0
+            var angle = before - after + 180
+            if (parseUnit.dir) angle = 360 - angle
+            angle %= 360
+            val delay = toMillisecond(angle.toDouble(), parseUnit.bpm)
             list.add(delay.toInt())
         }
         return list
     }
 
-    fun toMillisecond(degree: Double, bpm: Double) = (degree / 180.0) * (60.0 / bpm) * 1000.0
+    fun toMillisecond(degree: Double, bpm: Double) = (degree) * (60.0 / bpm) * 1000.0
 
     fun getBpm(jsonObject: JsonObject) = jsonObject.get(settings).asJsonObject.get(bpm).asDouble
     fun getCountDownTick(jsonObject: JsonObject) = jsonObject.get(settings).asJsonObject.get(countDownTicks).asInt
