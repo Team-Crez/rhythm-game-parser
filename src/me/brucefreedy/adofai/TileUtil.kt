@@ -8,6 +8,12 @@ import me.brucefreedy.adofai.Const.settings
 
 object TileUtil {
 
+    /*todo
+    * 길 각도 구하기 만들기
+    * 길 사이 간격의 시차 리스트 만들기
+    *
+     */
+
     private val PATH_MAP = mapOf(
         "R" to 0,
         "p" to 15,
@@ -36,6 +42,7 @@ object TileUtil {
         "!" to 999,
     )
 
+
     private fun calcAngle(jsonObject: JsonObject) =
         if (jsonObject.has(Const.pathData))
         //pathData
@@ -53,21 +60,25 @@ object TileUtil {
             json = jsonObject,
             dir = false
         )
+
         val events = mapOf(
             "Twirl" to Twirl(),
             "SetSpeed" to SetSpeed(),
         )
         val list = ArrayList<Int>()
+        println(angleList.map { it })
         val toList = jsonObject.get(actions).asJsonArray.map { it.asJsonObject }.toList()
         angleList.map { it }.forEachIndexed { index, floor ->
             toList.filter{it.get(Const.floor).asInt == index}.forEach {
                 val eventType = it.get(Const.eventType).asString
+                println(eventType)
                 parseUnit.floor = floor
-                parseUnit.json = it
+                parseUnit.json = it.asJsonObject
                 events[eventType]?.parse(parseUnit)
             }
+            val before = angleList[index]
             val after = if (index + 1 < angleList.size) angleList[index + 1] else 0
-            var angle = floor - after + 180
+            var angle = before - after + 180
             if (parseUnit.dir) angle = 360 - angle
             angle %= 360
             val delay = toMillisecond(angle.toDouble(), parseUnit.bpm)
