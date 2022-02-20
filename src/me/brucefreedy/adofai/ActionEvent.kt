@@ -3,6 +3,10 @@ package me.brucefreedy.adofai.actionevent
 import me.brucefreedy.adofai.Const
 import me.brucefreedy.adofai.ParseUnit
 
+interface ActionEvent {
+    fun parse(parseUnit: ParseUnit)
+}
+
 class SetSpeed : ActionEvent {
     override fun parse(parseUnit: ParseUnit) {
         val json = parseUnit.json
@@ -11,5 +15,11 @@ class SetSpeed : ActionEvent {
             "Bpm" -> parseUnit.bpm = json.get(Const.beatsPerMinute).asDouble
         }
         println("now ${parseUnit.bpm} bpm")
+    }
+}
+
+class Twirl : ActionEvent {
+    override fun parse(parseUnit: ParseUnit) {
+        parseUnit.dir = !parseUnit.dir
     }
 }

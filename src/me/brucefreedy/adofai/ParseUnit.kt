@@ -1,12 +1,11 @@
 package me.brucefreedy.adofai
 
 import com.google.gson.JsonObject
-import me.brucefreedy.game.Angle
 
 data class ParseUnit(
     var bpm: Double,
     var floor: Int = 0,
-    val angleList: List<Angle>,
+    val angleList: List<Int>,
     var json: JsonObject,
     var dir: Boolean = true,
 )

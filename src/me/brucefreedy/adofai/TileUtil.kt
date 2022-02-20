@@ -7,7 +7,6 @@ import me.brucefreedy.adofai.Const.countDownTicks
 import me.brucefreedy.adofai.Const.settings
 import me.brucefreedy.adofai.actionevent.SetSpeed
 import me.brucefreedy.adofai.actionevent.Twirl
-import me.brucefreedy.game.angle
 
 object TileUtil {
 
@@ -50,10 +49,10 @@ object TileUtil {
         if (jsonObject.has(Const.pathData))
         //pathData
             jsonObject.get(Const.pathData).asString.split("").let { it.subList(1, it.size - 1) }
-                .map { PATH_MAP[it]!!.angle }.toList()
+                .map { PATH_MAP[it]!! }.toList()
         else
         //angleData
-            jsonObject.get(Const.angleData).asJsonArray.map { it.asBigInteger.toInt().angle }
+            jsonObject.get(Const.angleData).asJsonArray.map { it.asBigInteger.toInt() }
 
     fun calcDelay(jsonObject: JsonObject): List<Int> {
         val angleList = calcAngle(jsonObject)
@@ -64,23 +63,23 @@ object TileUtil {
             dir = false
         )
 
-        val eventRegister = mapOf(
+        val events = mapOf(
             "Twirl" to Twirl(),
             "SetSpeed" to SetSpeed(),
         )
         val list = ArrayList<Int>()
-        println(angleList.map { it.number })
+        println(angleList.map { it })
         val toList = jsonObject.get(actions).asJsonArray.map { it.asJsonObject }.toList()
-        angleList.map { it.number }.forEachIndexed { index, floor ->
+        angleList.map { it }.forEachIndexed { index, floor ->
             toList.filter{it.get(Const.floor).asInt == index}.forEach {
                 val eventType = it.get(Const.eventType).asString
                 println(eventType)
                 parseUnit.floor = floor
                 parseUnit.json = it.asJsonObject
-                eventRegister[eventType]?.parse(parseUnit)
+                events[eventType]?.parse(parseUnit)
             }
-            val before = angleList[index].number
-            val after = if (index + 1 < angleList.size) angleList[index + 1].number else 0
+            val before = angleList[index]
+            val after = if (index + 1 < angleList.size) angleList[index + 1] else 0
             var angle = before - after + 180
             if (parseUnit.dir) angle = 360 - angle
             angle %= 360
