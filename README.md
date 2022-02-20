@@ -1,2 +1,2 @@
 # Rhythm Game Parser
-adofai and rhythm doctor level difficulty calculator
+made for adofai and rhythm doctor level difficulty calculator
