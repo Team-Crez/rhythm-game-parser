@@ -5,13 +5,11 @@ interface ActionEvent {
 }
 
 class SetSpeed : ActionEvent {
-    override fun parse(parseUnit: ParseUnit) {
-        val json = parseUnit.json
-        when (json.get(Const.speedType).asString) {
-            "Multiplier" -> parseUnit.bpm *= json.get(Const.bpmMultiplier).asDouble
-            "Bpm" -> parseUnit.bpm = json.get(Const.beatsPerMinute).asDouble
+    override fun parse(pu: ParseUnit) {
+        when (pu.json.get(Const.speedType).asString) {
+            "Multiplier" -> pu.bpm *= pu.json.get(Const.bpmMultiplier).asDouble
+            "Bpm" -> pu.bpm = pu.json.get(Const.beatsPerMinute).asDouble
         }
-        println("now ${parseUnit.bpm} bpm")
     }
 }
 
