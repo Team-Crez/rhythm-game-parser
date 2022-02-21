@@ -5,6 +5,7 @@ import me.brucefreedy.adofai.Const.actions
 import me.brucefreedy.adofai.Const.bpm
 import me.brucefreedy.adofai.Const.countdownTicks
 import me.brucefreedy.adofai.Const.settings
+import kotlin.math.absoluteValue
 
 object TileUtil {
 
@@ -47,7 +48,7 @@ object TileUtil {
         if (jsonObject.has(Const.pathData))
         //pathData
             jsonObject.get(Const.pathData).asString.split("").let { it.subList(1, it.size - 1) }
-                .map { PATH_MAP[it]!! }.toList()
+                .map { PATH_MAP[it]!! }.toList()//.let { list -> ArrayList(list).apply { (0..2).forEach {add(list.last())} } }
         else
         //angleData
             jsonObject.get(Const.angleData).asJsonArray.map { it.asBigInteger.toInt() }
@@ -80,14 +81,14 @@ object TileUtil {
             val after = if (index + 1 < angleList.size) angleList[index + 1] else 0
             var angle = before - after + 180
             if (parseUnit.dir) angle = 360 - angle
-            angle %= 360
+            angle = if (angle > 0) angle % 360 else 360 - (angle.absoluteValue % 360)
             val delay = toMillisecond(angle.toDouble(), parseUnit.bpm)
             list.add(delay.toInt())
         }
         return list
     }
 
-    fun toMillisecond(degree: Double, bpm: Double) = (degree / 180.0) * (60.0 / bpm) * 1000.0
+    fun toMillisecond(degree: Double, bpm: Double) = (degree / 180.0) * (60.0 / bpm) * 1000
 
     fun getSettings(jsonObject: JsonObject) = jsonObject.get(settings).asJsonObject
     fun getBpm(jsonObject: JsonObject) = getSettings(jsonObject).get(bpm).asDouble
